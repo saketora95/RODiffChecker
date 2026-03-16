@@ -1,0 +1,7 @@
+__pycache__/*
+*.pyc
+
+input/*
+temp/*
+parser/*
+output/*
