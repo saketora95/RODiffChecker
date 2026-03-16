@@ -47,7 +47,6 @@ def replace_key_word(input_line: str):
         input_line = input_line.replace(key, ex_table.ext_param_table[key])
         
     for key in ex_table.keep_word_table:
-        print(key)
         input_line = input_line.replace(key, ex_table.keep_word_table[key])
 
     for key in ex_table.get_table:
