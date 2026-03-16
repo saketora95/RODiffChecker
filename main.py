@@ -7,6 +7,7 @@ import function.file_process as fp
 import function.iteminfo_diffrent_check as iteminfo_diff
 import function.enchantlist_different_check as enchantlist_diff
 import function.equipprop_different_check as equipprop_diff
+import function.equipprop_effect_explain as equipprop_explain
 import function.reform_different_check as reform_diff
 
 #region Initial
@@ -57,10 +58,9 @@ print('''
 2. 主要目的為比對這些檔案舊版本與新版本的不同，因此如果是第一次執行或僅有一份檔案，程式僅會進行初步的初始化，或者比對結果為空（因為沒有不同的檔案，無論怎麼比較都是相同的）。
 3. 部分步驟需要使用者自行將 .lub 檔案轉換為 .lua 或 .txt 檔案，若沒有這部分的能力，部分流程將無法執行。
 4. 此程式正確執行時，不會自動關閉；倘若執行後程式自行消失，表示中途遭遇了什麼錯誤或 bug 而導致程式執行失敗。
-5. 若有 kRO 的需求，請設置 config 檔案中的 KR_Mode 為 1 即可。
 ''')
 
-# input(f'上述提醒已經閱讀過了嗎？如果沒問題的話，按下 Enter 就會開始執行了。 ( 目前處理模式: {MODE} )\n')
+input(f'上述提醒已經閱讀過了嗎？如果沒問題的話，按下 Enter 就會開始執行了。\n')
 
 print('# 程式開始執行')
 
@@ -137,6 +137,11 @@ if process_flag_dict[PROPERTY_FILE_NAME]:
 
         equipprop_diff.compare_dict(old_info, new_info, f'{OUTPUT_PATH}EquipmentPropertiesCompareResult.txt')
         print(f'  結束 {pure_file_name} 的比對處理。')
+
+        equipprop_explain.explain_file(
+            f'{OUTPUT_PATH}EquipmentPropertiesCompareResult.txt',
+            f'{OUTPUT_PATH}EquipmentPropertiesExplainResult.txt'
+        )
     else:
         print(f'  由於檔案數量不足，略過 {pure_file_name} 的比對處理。')
 print(f'第 4 步驟: 比對 {PROPERTY_FILE_NAME} 檔案完成\n')
