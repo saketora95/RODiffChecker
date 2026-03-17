@@ -80,7 +80,8 @@ function_handlers = {
     # - 種族
     'RaceAddDamage':                lambda indent, param: f"{indent}對 {param[0]}種族 的物理傷害 + {param[1]}%",
     'AddMdamage_Race':              lambda indent, param: f"{indent}對 {param[0]}種族 的魔法傷害 + {param[1]}%",
-    'RaceSubDamage':                lambda indent, param: f"{indent}對 {param[0]}種族 的物理與魔法傷害 - {param[1]}%",
+    'RaceSubDamage':                lambda indent, param: f"{indent}對 {param[0]}種族 的物理傷害 - {param[1]}%",
+    'SubMdamage_Race':              lambda indent, param: f"{indent}對 {param[0]}種族 的魔法傷害 - {param[1]}%",
     # - 階級
     'ClassAddDamage':               lambda indent, param: f"{indent}{'來自' if param[1] == '0' else '對'} {param[0]}階級 的物理與魔法傷害 + {param[2]}%",
     'AddMdamage_Class':             lambda indent, param: f"{indent}對 {param[0]}階級 的魔法傷害 + {param[1]}%",
@@ -101,6 +102,7 @@ function_handlers = {
     'AddRaceTolerace':              lambda indent, param: f"{indent}對 {param[0]}種族 的抗性 + {param[1]}%",
     'SubRaceTolerace':              lambda indent, param: f"{indent}對 {param[0]}種族 的抗性 - {param[1]}%",
     'RaceAddDamageSelf':            lambda indent, param: f"{indent}來自 {param[0]}種族 的傷害 + {param[1]}%",
+    
     # - 階級
     'ClassSubDamage':               lambda indent, param: f"{indent}{'來自' if param[1] == '0' else '對'} {param[0]}階級 的物理與魔法傷害 - {param[2]}% (有誤的機會較高)",
 }
