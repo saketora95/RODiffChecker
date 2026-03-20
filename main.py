@@ -12,7 +12,6 @@ import function.equipprop_effect_explain as equipprop_explain
 import function.reform_different_check as reform_diff
 
 #region Initial
-# MODE = 'twRO'
 ENCODING = 'utf-8'
 OTHER_ENCODING = 'cp950'
 ITEM_FILE_NAME = 'iteminfo_new.lub'
@@ -20,11 +19,6 @@ ENCHANT_FILE_NAME = 'enchantlist.txt'
 PROPERTY_FILE_NAME = 'equipmentproperties.txt'
 REFORM_FILE_NAME = 'itemreformsystem.txt'
 KR_ITEM_FILE_NAME = 'itemInfo_true.lub'
-# config = config_reader.get_config()
-# if config['Settings']['KR_Mode'] == '1':
-#     MODE = 'kRO'
-#     ENCODING = 'cp949'
-#     ITEM_FILE_NAME = 'itemInfo_true.lub'
 
 DATETIME_TEXT = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
