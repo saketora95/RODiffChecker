@@ -5,6 +5,7 @@ import datetime
 import function.config_reader as config_reader
 import function.file_process as fp
 import function.iteminfo_diffrent_check as iteminfo_diff
+import function.iteminfo_effect_replace as iteminfo_replace
 import function.enchantlist_different_check as enchantlist_diff
 import function.equipprop_different_check as equipprop_diff
 import function.equipprop_effect_explain as equipprop_explain
@@ -18,6 +19,7 @@ ITEM_FILE_NAME = 'iteminfo_new.lub'
 ENCHANT_FILE_NAME = 'enchantlist.txt'
 PROPERTY_FILE_NAME = 'equipmentproperties.txt'
 REFORM_FILE_NAME = 'itemreformsystem.txt'
+KR_ITEM_FILE_NAME = 'itemInfo_true.lub'
 # config = config_reader.get_config()
 # if config['Settings']['KR_Mode'] == '1':
 #     MODE = 'kRO'
@@ -39,6 +41,7 @@ process_flag_dict = {
     ENCHANT_FILE_NAME: False,
     PROPERTY_FILE_NAME: False,
     REFORM_FILE_NAME: False,
+    KR_ITEM_FILE_NAME: False
 }
 
 #endregion
@@ -62,11 +65,12 @@ print('''
 
 input(f'上述提醒已經閱讀過了嗎？如果沒問題的話，按下 Enter 就會開始執行了。\n')
 
-print('# 程式開始執行')
+print('# 程式開始執行\n')
 
 #endregion
 
 #region File Copy
+
 fp.create_dir(INPUT_PATH)
 fp.create_dir(TEMP_PATH)
 fp.create_dir(OUTPUT_PATH)
@@ -88,6 +92,7 @@ print('第 1 步驟: 搬移檔案完成\n')
 #endregion
 
 #region Item Info
+
 if process_flag_dict[ITEM_FILE_NAME]:
     pure_file_name = ITEM_FILE_NAME[:-4]
     newest_file = fp.get_newest_file(TEMP_PATH, pure_file_name)
@@ -108,6 +113,7 @@ print(f'第 2 步驟: 比對 {ITEM_FILE_NAME} 檔案完成\n')
 #endregion
 
 #region Enchant List
+
 if process_flag_dict[ENCHANT_FILE_NAME]:
     pure_file_name = ENCHANT_FILE_NAME[:-4]
     newest_file = fp.get_newest_file(TEMP_PATH, pure_file_name)
@@ -126,6 +132,7 @@ print(f'第 3 步驟: 比對 {ENCHANT_FILE_NAME} 檔案完成\n')
 #endregion
 
 #region Equipment Properties
+
 if process_flag_dict[PROPERTY_FILE_NAME]:
     pure_file_name = PROPERTY_FILE_NAME[:-4]
     newest_file = fp.get_newest_file(TEMP_PATH, pure_file_name)
@@ -149,6 +156,7 @@ print(f'第 4 步驟: 比對 {PROPERTY_FILE_NAME} 檔案完成\n')
 #endregion
 
 #region Item Reform System
+
 if process_flag_dict[REFORM_FILE_NAME]:
     pure_file_name = REFORM_FILE_NAME[:-4]
     newest_file = fp.get_newest_file(TEMP_PATH, pure_file_name)
@@ -163,6 +171,29 @@ if process_flag_dict[REFORM_FILE_NAME]:
     else:
         print(f'  由於檔案數量不足，略過 {REFORM_FILE_NAME} 的比對處理。')
 print(f'第 5 步驟: 比對 {REFORM_FILE_NAME} 檔案完成\n')
+
+#endregion
+
+#region KR Item Info
+
+if process_flag_dict[KR_ITEM_FILE_NAME]:
+    pure_file_name = KR_ITEM_FILE_NAME[:-4]
+    newest_file = fp.get_newest_file(TEMP_PATH, pure_file_name)
+    fp.parse_lub_to_lua(PARSER_PATH, newest_file)
+    fp.maintain_file_limit(TEMP_PATH, pure_file_name, 5, 'lua')
+
+    lua_file_list = fp.get_file_list(TEMP_PATH, pure_file_name, 'lua')
+    if len(lua_file_list) >= 2:
+        old_info = iteminfo_diff.read_lua_file(lua_file_list[-2], 'cp949')
+        new_info = iteminfo_diff.read_lua_file(lua_file_list[-1], 'cp949')
+
+        iteminfo_diff.compare_dict(old_info, new_info, f'{OUTPUT_PATH}ItemInfoCompareResult_KR.txt', ENCODING)
+        print(f'  結束 {pure_file_name} 的比對處理。')
+
+        iteminfo_replace.replace_file(f'{OUTPUT_PATH}ItemInfoCompareResult_KR.txt', f'{OUTPUT_PATH}ItemInfoReplaceResult_KR.txt', ENCODING)
+    else:
+        print(f'  由於檔案數量不足，略過 {pure_file_name} 的比對處理。')
+print(f'第 6 步驟: 比對 {KR_ITEM_FILE_NAME} 檔案完成\n')
 
 #endregion
 
