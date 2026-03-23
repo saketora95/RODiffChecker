@@ -185,6 +185,7 @@ if process_flag_dict[KR_ITEM_FILE_NAME]:
         print(f'  結束 {pure_file_name} 的比對處理。')
 
         iteminfo_replace.replace_file(f'{OUTPUT_PATH}ItemInfoCompareResult_KR.txt', f'{OUTPUT_PATH}ItemInfoReplaceResult_KR.txt', ENCODING)
+        print(f'  結束 {pure_file_name} 的轉換處理。')
     else:
         print(f'  由於檔案數量不足，略過 {pure_file_name} 的比對處理。')
 print(f'第 6 步驟: 比對 {KR_ITEM_FILE_NAME} 檔案完成\n')

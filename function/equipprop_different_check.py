@@ -31,24 +31,24 @@ def compare_dict(old_data_dict, new_data_dict, result_path):
 
     for old_key in old_data_dict:
         if old_key not in new_data_dict:
-            write_file.write(f'# {old_key} (資料移除)\n{old_data_dict[old_key]}\n\n----- ----- -----\n\n')
-            print(f'    發現 資料移除: {old_key}')
+            write_file.write(f'# {old_key} (資料移除)\n{old_data_dict[old_key]['raw_text']}\n\n----- ----- -----\n\n')
+            print(f'    - 發現 [ 資料移除 ]: {old_key}')
 
     for new_key in new_data_dict:
         if new_key in old_data_dict and old_data_dict[new_key] != new_data_dict[new_key]:
             differ = difflib.Differ()
             diff = differ.compare(old_data_dict[new_key].splitlines(), new_data_dict[new_key].splitlines())
 
-            write_file.write('# {} (內容調整)\n{}\n\n----- ----- -----\n\n'.format(
+            write_file.write('# {} (內容變更)\n{}\n\n----- ----- -----\n\n'.format(
                 new_key,
                 '\n'.join([line for line in diff if not line.startswith('? ')])
             ))
-            print(f'    發現 內容調整: {new_key}')
+            print(f'    - 發現 [ 內容變更 ]: {new_key}')
             continue
 
         if new_key not in old_data_dict:
-            write_file.write(f'# {new_key} (新增資料)\n{new_data_dict[new_key]}\n\n----- ----- -----\n\n')
-            print(f'    發現 新增資料: {new_key}')
+            write_file.write(f'# {new_key} (新增資料)\n{new_data_dict[new_key]['raw_text']}\n\n----- ----- -----\n\n')
+            print(f'    - 發現 [ 新增資料 ]: {new_key}')
             continue
     
     write_file.write('文件到此結束。')

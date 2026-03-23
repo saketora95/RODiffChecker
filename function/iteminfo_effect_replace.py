@@ -53,7 +53,19 @@ def _build_regex_rules():
 
     return first_layer_compiled_rules, second_layer_compiled_rules
 
+def _build_literal_reaplce_table():
+    literal_reaplce_table = dict(
+        sorted(
+            effect_table.LITERAL_REPLACE_TABLE.items(),
+            key=lambda item: len(item[0]),
+            reverse=True
+        )
+    )
+
+    return literal_reaplce_table
+
 FIRST_LAYER_COMPILED_REGEX_RULES, SECOND_LAYER_COMPILED_REGEX_RULES = _build_regex_rules()
+LITERAL_REPLACE_TABLE = _build_literal_reaplce_table()
 
 
 def _format_with_match(template: str, match: re.Match) -> str:
@@ -94,7 +106,7 @@ def apply_replace_rules(text: str) -> str:
                 replaced_text,
             )
 
-    for source, target in effect_table.LITERAL_REPLACE_TABLE.items():
+    for source, target in LITERAL_REPLACE_TABLE.items():
         replaced_text = replaced_text.replace(source, target)
 
     return replaced_text
@@ -114,3 +126,5 @@ def replace_file(input_file_path: str, output_file_path: str, encoding: str = 'u
             output_file.write(replaced_text)
         else:
             output_file.write(replaced_text + '\n')
+
+    print(f'  生成置換結果: {output_file_path}')
