@@ -53,7 +53,7 @@ def compare_dict(old_data_dict, new_data_dict, result_path, encoding='utf-8'):
                 relation_equips,
                 old_data_dict[old_key]
             ))
-            write_file.write(f'# {old_key} (資料移除)\n{old_data_dict[old_key]['raw_text']}\n\n----- ----- -----\n\n')
+            write_file.write(f'# {old_key} (資料移除)\n{old_data_dict[old_key]["raw_text"]}\n\n----- ----- -----\n\n')
             print(f'    - 發現 [ 資料移除 ]: {old_key} ({relation_equips})')
 
     for new_key in new_data_dict:

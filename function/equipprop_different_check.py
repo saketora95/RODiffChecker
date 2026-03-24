@@ -31,7 +31,7 @@ def compare_dict(old_data_dict, new_data_dict, result_path):
 
     for old_key in old_data_dict:
         if old_key not in new_data_dict:
-            write_file.write(f'# {old_key} (資料移除)\n{old_data_dict[old_key]['raw_text']}\n\n----- ----- -----\n\n')
+            write_file.write(f'# {old_key} (資料移除)\n{old_data_dict[old_key]["raw_text"]}\n\n----- ----- -----\n\n')
             print(f'    - 發現 [ 資料移除 ]: {old_key}')
 
     for new_key in new_data_dict:
@@ -47,7 +47,7 @@ def compare_dict(old_data_dict, new_data_dict, result_path):
             continue
 
         if new_key not in old_data_dict:
-            write_file.write(f'# {new_key} (新增資料)\n{new_data_dict[new_key]['raw_text']}\n\n----- ----- -----\n\n')
+            write_file.write(f'# {new_key} (新增資料)\n{new_data_dict[new_key]["raw_text"]}\n\n----- ----- -----\n\n')
             print(f'    - 發現 [ 新增資料 ]: {new_key}')
             continue
     
