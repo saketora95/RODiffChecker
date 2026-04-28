@@ -1304,7 +1304,10 @@ LITERAL_REPLACE_TABLE = {
 	'[B등급]': '[B 階級]',
 	'[A등급]': '[A 階級]',
     
+    '계열 : 단검 ': '系列 : 短劍   ',
+    '계열 : 메이스 ': '系列 : 鈍器   ',
     '계열 : 양손도끼 ': '系列 : 雙手斧   ',
+
     '계열 : 투구 ': '系列 : 頭飾   ',
     '계열 : 갑옷 ': '系列 : 鎧甲   ',
     '계열 : 방패 ': '系列 : 盾牌   ',
@@ -1518,6 +1521,22 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 	{
 		'pattern': r'(?P<indent>\s*)모든 속성의 적에게 주는 물리/마법 데미지 (?P<value>.+?) (?:추가\s*)?증가',
 		'replacement': '{indent}對所有屬性敵人的物理與魔法傷害 + {value}',
+	},
+    {
+		'pattern': r'(?P<indent>\s*)모든 속성 몬스터에게 주는 물리 데미지 (?P<value>.+?) (?:추가\s*)?증가',
+		'replacement': '{indent}對所有屬性魔物的物理傷害 + {value}',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)모든 속성 몬스터에게 주는 마법 데미지 (?P<value>.+?) (?:추가\s*)?증가',
+		'replacement': '{indent}對所有屬性魔物的魔法傷害 + {value}',
+	},
+    {
+		'pattern': r'(?P<indent>\s*)모든 속성 적에게 주는 물리 데미지 (?P<value>.+?) (?:추가\s*)?증가',
+		'replacement': '{indent}對所有屬性敵人的物理傷害 + {value}',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)모든 속성 적에게 주는 마법 데미지 (?P<value>.+?) (?:추가\s*)?증가',
+		'replacement': '{indent}對所有屬性敵人的魔法傷害 + {value}',
 	},
 	{
 		'pattern': r'(?P<indent>\s*)모든 속성의 적에게 주는 물리 데미지 (?P<value>.+?) (?:추가\s*)?증가',
@@ -1825,7 +1844,11 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 		'replacement': '{indent}施展技能的 SP 消耗 - {value}',
 	},
 	{
-		'pattern': r'(?P<indent>\s*)공격 속도 (?:추가\s*)?증가\(공격 후 딜레이 (?P<value>.+?) (?:추가\s*)?감소\)',
+		'pattern': r'(?P<indent>\s*)공격속도(?:추가\s*)?증가\(공격 후 딜레이 (?P<value>.+?) (?:추가\s*)?감소\)',
+		'replacement': '{indent}攻擊速度增加 (攻擊後延遲 - {value})',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)공격 속도(?:추가\s*)?증가\(공격 후 딜레이 (?P<value>.+?) (?:추가\s*)?감소\)',
 		'replacement': '{indent}攻擊速度增加 (攻擊後延遲 - {value})',
 	},
 	{
