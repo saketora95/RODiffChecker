@@ -49,6 +49,7 @@ LITERAL_REPLACE_TABLE = {
     '소환사': '召喚師',
     '도람족': '喵族',
     '혼령사': '魂靈師',
+    '알리테아': '阿利提亞（德魯伊）',
     #endregion
     
 	#region 技能
@@ -1290,6 +1291,8 @@ LITERAL_REPLACE_TABLE = {
     '와일드 워크': '狂野疾行',
     '리드미컬 웨이브': '節奏戰波',
     # 285 
+    '서번트 웨폰-클리브': '死侍武器-斬裂',
+    '서번트 웨폰 - 클리브': '死侍武器 - 斬裂',
     '서번트 웨폰–클리브': '死侍武器-斬裂',
     '서번트 웨폰 – 클리브': '死侍武器 - 斬裂',
     '쉴드 슬램': '盾牌猛撞',
@@ -1314,6 +1317,9 @@ LITERAL_REPLACE_TABLE = {
     '프라임드 스위프트 트랩': '填裝急速陷阱',
     '프라임드 솔리드 트랩': '填裝磐石陷阱',
     '프라임드 딥 블라인드 트랩': '填裝深盲陷阱',
+    '프라임드 (솔리드/플레임) 트랩': '填裝 (磐石/火焰) 陷阱',
+    '프라임드 (딥 블라인드/스위프트) 트랩': '填裝 (深盲/急速) 陷阱',
+    '프라임드 (솔리드/플레임/딥 블라인드/스위프트) 트랩': '填裝 (磐石/火焰/深盲/急速) 陷阱',
     '푸가 데 플레슈': '箭矢賦格',
     '신기루–군집': '幻影-群集',
     '신기루 – 군집': '幻影 - 群集',
@@ -1348,6 +1354,7 @@ LITERAL_REPLACE_TABLE = {
     '계열 : 단검 ': '系列 : 短劍   ',
     '계열 : 메이스 ': '系列 : 鈍器   ',
     '계열 : 양손도끼 ': '系列 : 雙手斧   ',
+    '계열 : 한손 지팡이 ': '系列 : 單手杖   ',
 
     '계열 : 투구 ': '系列 : 頭飾   ',
     '계열 : 갑옷 ': '系列 : 鎧甲   ',
@@ -1357,6 +1364,7 @@ LITERAL_REPLACE_TABLE = {
     '계열 : 액세서리(왼쪽) ': '系列 : 飾品(L)   ',
     '계열 : 액세서리(오른쪽) ': '系列 : 飾品(R)   ',
     '계열 : 카드': '系列 : 卡片',
+    '계열 : 의상장비': '系列 : 服飾裝備',
     
 	'장착 : 무기': '部位 : 武器',
 	'장착 : 투구': '部位 : 頭飾',
@@ -1379,6 +1387,9 @@ LITERAL_REPLACE_TABLE = {
     '계열': '系列',
 
     '무기에 대한 크기 패널티가 사라진다': '刪除武器體型懲罰',
+    '이벤트 한정 옵션': '活動期間限定效果',
+    '이벤트 한정 옵션은 이벤트 종료 시 삭제됩니다': '活動期間限定效果於活動結束時刪除',
+    '이벤트 한정 옵션은 이벤트 종료 시 삭제됩니다.': '活動期間限定效果於活動結束時刪除',
 	#endregion
     
 }
@@ -1398,6 +1409,10 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 		'replacement': '{indent}基本等級達 {value} 以上時，',
 	},
 	{
+		'pattern': r'(?P<indent>\s*)베이스 레벨이 (?P<value>\d+) 이상인 경우,\s*',
+		'replacement': '{indent}基本等級達 {value} 以上時，',
+	},
+	{
 		'pattern': r'(?P<indent>\s*)순수 (?P<status>.+?)가 (?P<value>\d+) 이상인 경우,\s*',
 		'replacement': '{indent}純粹 {status} 達 {value} 以上時，',
 	},
@@ -1413,6 +1428,10 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
     
     #region 精煉判斷
 	{
+		'pattern': r'(?P<indent>\s*)무기 (?P<value>\d+)제련 당\s*',
+		'replacement': '{indent}武器精煉值每 +{value:>2} 時，',
+	},
+	{
 		'pattern': r'(?P<indent>\s*)(?P<value>\d+)\s*제련 당\s*',
 		'replacement': '{indent}精煉值每 +{value:>2} 時，',
 	},
@@ -1421,16 +1440,20 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 		'replacement': '{indent}精煉值每 +{value:>2} 時，',
 	},
 	{
-		'pattern': r'(?P<indent>\s*)무기 (?P<value>\d+)제련 당\s*',
-		'replacement': '{indent}武器精煉值每 +{value:>2} 時，',
-	},
-	{
 		'pattern': r'(?P<indent>\s*)(?P<value>\d+)제련 시,\s*',
 		'replacement': '{indent}精煉值達 +{value:>2} 以上時，',
 	},
 	{
 		'pattern': r'(?P<indent>\s*)(?P<value>\d+)제련 이상인 경우,\s*',
 		'replacement': '{indent}精煉值達 +{value:>2} 以上時，',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)무기가 (?P<value>\d+)제련 이상인 경우,\s*',
+		'replacement': '{indent}武器精煉值達 +{value:>2} 以上時，',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)갑옷이 (?P<value>\d+)제련 이상인 경우,\s*',
+		'replacement': '{indent}鎧甲精煉值達 +{value:>2} 以上時，',
 	},
     #endregion
     
@@ -1455,6 +1478,10 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 		'replacement': '{indent}同時裝備「{equip}」時，',
 	},
 	{
+		'pattern': r'(?P<indent>\s*)(?P<equip>.+?)과 함께 장착 시,\s*',
+		'replacement': '{indent}同時裝備「{equip}」時，',
+	},
+	{
 		'pattern': r'(?P<indent>\s*)(?P<equip_1>.+?), (?P<equip_2>.+?)와 함께 장착 시,\s*',
 		'replacement': '{indent}同時裝備「{equip_1}」與「{equip_2}」時，',
 	},
@@ -1473,6 +1500,14 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 	{
 		'pattern': r'(?P<indent>\s*)(?P<series_name>.+?)의 \((?P<series_detail>.+?)\)의 각 등급이 (?P<grade_level>.+?)등급 이상인 경우,\s*',
 		'replacement': '{indent}{series_name}系列裝備 ({series_detail}) 的階級均達 {grade_level} 階級以上時，',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)(?P<equip_1>.+?), (?P<equip_2>.+?)의 제련도 합이 (?P<refine_level>.+?) 이상이며, 각 (?P<grade_level>.+?)등급 이상이고,\s*',
+		'replacement': '{indent}同時裝備「{equip_1}」與「{equip_2}」、合計精煉值達 {refine_level} 且階級均達 {grade_level} 階級以上時，',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)(?P<equip_1>.+?), (?P<equip_2>.+?), (?P<equip_3>.+?)의 제련도 합이 (?P<refine_level>.+?) 이상이며, 각 (?P<grade_level>.+?)등급 이상이고,\s*',
+		'replacement': '{indent}同時裝備「{equip_1}」、「{equip_2}」與「{equip_3}」、合計精煉值達 {refine_level} 且階級均達 {grade_level} 階級以上時，',
 	},
     #endregion
     
@@ -1846,6 +1881,10 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 	},
 
 	{
+		'pattern': r'(?P<indent>\s*)화, 무속성 마법 데미지 (?P<value>.+?) (?:추가\s*)?증가',
+		'replacement': '{indent}火與無屬性的魔法傷害 + {value}',
+	},
+	{
 		'pattern': r'(?P<indent>\s*)수, 풍, 지속성 마법 데미지 (?P<value>.+?) (?:추가\s*)?증가',
 		'replacement': '{indent}水、風與地屬性的魔法傷害 + {value}',
 	},
@@ -1870,8 +1909,19 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 		'replacement': '{indent}火、無、聖、風、暗、念與不死屬性的魔法傷害 + {value}',
 	},
     #endregion
+
+    #region 複合傷害
+	{
+		'pattern': r'(?P<indent>\s*)모든 크기 및 속성의 적에게 주는 마법 데미지 (?P<value>.+?) (?:추가\s*)?증가',
+		'replacement': '{indent}對所有體型與所有屬性敵人的物理與魔法傷害 + {value}',
+	},
+    #endregion
     
     #region 功能
+	{
+		'pattern': r'(?P<indent>\s*)몬스터 사냥 시 얻는 경험치 \+ (?P<value>.+?)',
+		'replacement': '{indent}打倒魔物獲得的經驗值 + {value}',
+	},
 	{
 		'pattern': r'(?P<indent>\s*)고정 캐스팅 (?P<value>.+?)초 (?:추가\s*)?감소',
 		'replacement': '{indent}固定詠唱時間 - {value} 秒',
@@ -1885,11 +1935,11 @@ FIRST_LAYER_REGEX_REPLACE_RULES = [
 		'replacement': '{indent}施展技能的 SP 消耗 - {value}',
 	},
 	{
-		'pattern': r'(?P<indent>\s*)공격속도(?:추가\s*)?증가\(공격 후 딜레이 (?P<value>.+?) (?:추가\s*)?감소\)',
+		'pattern': r'(?P<indent>\s*)공격속도 (?:추가\s*)?증가\(공격 후 딜레이 (?P<value>.+?) (?:추가\s*)?감소\)',
 		'replacement': '{indent}攻擊速度增加 (攻擊後延遲 - {value})',
 	},
 	{
-		'pattern': r'(?P<indent>\s*)공격 속도(?:추가\s*)?증가\(공격 후 딜레이 (?P<value>.+?) (?:추가\s*)?감소\)',
+		'pattern': r'(?P<indent>\s*)공격 속도 (?:추가\s*)?증가\(공격 후 딜레이 (?P<value>.+?) (?:추가\s*)?감소\)',
 		'replacement': '{indent}攻擊速度增加 (攻擊後延遲 - {value})',
 	},
 	{
@@ -2073,6 +2123,10 @@ SECOND_LAYER_REGEX_REPLACE_RULES = [
 	{
 		'pattern': r'(?P<indent>\s*)(?P<skill>.+?) 데미지 (?P<value>.+?) (?:추가\s*)?증가',
 		'replacement': '{indent}{skill}的傷害 + {value}',
+	},
+	{
+		'pattern': r'(?P<indent>\s*)(?P<skill>.+?) 스킬 쿨타임 (?P<value>.+?)초 감소',
+		'replacement': '{indent}{skill}的冷卻時間 - {value} 秒',
 	},
 ]
 #endregion
